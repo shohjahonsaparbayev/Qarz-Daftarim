@@ -1,0 +1,2297 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Qarz Daftarim Pro — Obuna va Moliyaviy Boshqaruv Tizimi</title>
+     <style>
+          :root {
+               --bg-main: #f3f4f6;
+               --bg-card: #ffffff;
+               --bg-sidebar: #0f172a;
+               --text-main: #111827;
+               --text-muted: #6b7280;
+               --text-sidebar: #e2e8f0;
+               --border-color: #e5e7eb;
+               --primary: #2563eb;
+               --primary-hover: #1d4ed8;
+               --success: #10b981;
+               --success-bg: #d1fae5;
+               --danger: #ef4444;
+               --danger-bg: #fee2e2;
+               --warning: #f59e0b;
+               --warning-bg: #fef3c7;
+               --info: #3b82f6;
+               --info-bg: #dbeafe;
+               --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+               --radius: 12px;
+          }
+
+          [data-theme="dark"] {
+               --bg-main: #0b1120;
+               --bg-card: #1e293b;
+               --bg-sidebar: #020617;
+               --text-main: #f8fafc;
+               --text-muted: #94a3b8;
+               --border-color: #334155;
+               --success-bg: rgba(16, 185, 129, 0.15);
+               --danger-bg: rgba(239, 68, 68, 0.15);
+               --warning-bg: rgba(245, 158, 11, 0.15);
+               --info-bg: rgba(59, 130, 246, 0.15);
+               --shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+          }
+
+          * {
+               box-sizing: border-box;
+               margin: 0;
+               padding: 0;
+               font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+          }
+
+          body {
+               background-color: var(--bg-main);
+               color: var(--text-main);
+               transition: background-color 0.25s, color 0.25s;
+               min-height: 100vh;
+          }
+
+          /* AUTH & PAYWALL SCREEN */
+          .auth-wrapper {
+               min-height: 100vh;
+               display: flex;
+               align-items: center;
+               justify-content: center;
+               background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+               padding: 20px;
+          }
+
+          .auth-card {
+               background: var(--bg-card);
+               width: 100%;
+               max-width: 450px;
+               border-radius: 16px;
+               padding: 34px;
+               box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.45);
+          }
+
+          .auth-logo {
+               text-align: center;
+               margin-bottom: 22px;
+          }
+
+          .auth-logo .icon-box {
+               width: 56px;
+               height: 56px;
+               background: var(--primary);
+               color: #fff;
+               border-radius: 14px;
+               display: inline-flex;
+               align-items: center;
+               justify-content: center;
+               font-size: 26px;
+               font-weight: bold;
+               margin-bottom: 12px;
+          }
+
+          .auth-tabs {
+               display: flex;
+               background: var(--bg-main);
+               border-radius: 10px;
+               padding: 4px;
+               margin-bottom: 22px;
+          }
+
+          .auth-tab {
+               flex: 1;
+               padding: 10px;
+               border: none;
+               background: transparent;
+               color: var(--text-muted);
+               font-weight: 600;
+               cursor: pointer;
+               border-radius: 8px;
+               transition: 0.2s;
+          }
+
+          .auth-tab.active {
+               background: var(--bg-card);
+               color: var(--primary);
+               box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+          }
+
+          .form-group {
+               margin-bottom: 15px;
+          }
+
+          .form-group label {
+               display: block;
+               font-size: 13px;
+               font-weight: 600;
+               margin-bottom: 6px;
+               color: var(--text-main);
+          }
+
+          .form-control {
+               width: 100%;
+               padding: 10px 14px;
+               border: 1px solid var(--border-color);
+               border-radius: 8px;
+               background: var(--bg-main);
+               color: var(--text-main);
+               font-size: 14px;
+               outline: none;
+               transition: border-color 0.2s;
+          }
+
+          .form-control:focus {
+               border-color: var(--primary);
+          }
+
+          .remember-row {
+               display: flex;
+               align-items: center;
+               justify-content: space-between;
+               margin-bottom: 18px;
+               font-size: 13px;
+          }
+
+          .remember-row label {
+               display: flex;
+               align-items: center;
+               gap: 8px;
+               cursor: pointer;
+               user-select: none;
+          }
+
+          .btn {
+               display: inline-flex;
+               align-items: center;
+               justify-content: center;
+               gap: 8px;
+               padding: 10px 18px;
+               border-radius: 8px;
+               border: none;
+               font-size: 14px;
+               font-weight: 600;
+               cursor: pointer;
+               transition: 0.2s;
+          }
+
+          .btn-primary {
+               background: var(--primary);
+               color: #fff;
+          }
+
+          .btn-primary:hover {
+               background: var(--primary-hover);
+          }
+
+          .btn-success {
+               background: var(--success);
+               color: #fff;
+          }
+
+          .btn-danger {
+               background: var(--danger);
+               color: #fff;
+          }
+
+          .btn-warning {
+               background: var(--warning);
+               color: #fff;
+          }
+
+          .btn-outline {
+               background: transparent;
+               border: 1px solid var(--border-color);
+               color: var(--text-main);
+          }
+
+          .btn-outline:hover {
+               background: var(--bg-main);
+          }
+
+          .btn-sm {
+               padding: 6px 12px;
+               font-size: 12px;
+          }
+
+          .btn-block {
+               width: 100%;
+          }
+
+          /* PAYWALL LOCK SCREEN */
+          .paywall-box {
+               background: var(--danger-bg);
+               border: 1px solid var(--danger);
+               border-radius: 12px;
+               padding: 16px;
+               margin-bottom: 18px;
+               text-align: center;
+          }
+
+          .payment-card-info {
+               background: var(--bg-main);
+               border: 1px dashed var(--primary);
+               border-radius: 10px;
+               padding: 14px;
+               margin-bottom: 16px;
+               font-size: 13.5px;
+          }
+
+          /* DEMO NOTICE BANNER */
+          .demo-banner {
+               background: var(--warning-bg);
+               border: 1px solid var(--warning);
+               color: var(--text-main);
+               padding: 12px 16px;
+               border-radius: 10px;
+               margin-bottom: 20px;
+               display: flex;
+               flex-wrap: wrap;
+               align-items: center;
+               justify-content: space-between;
+               gap: 10px;
+               font-size: 13px;
+          }
+
+          /* APP LAYOUT */
+          .app-container {
+               display: none;
+               min-height: 100vh;
+          }
+
+          .sidebar {
+               width: 270px;
+               background: var(--bg-sidebar);
+               color: var(--text-sidebar);
+               display: flex;
+               flex-direction: column;
+               position: fixed;
+               top: 0;
+               bottom: 0;
+               left: 0;
+               z-index: 100;
+               transition: transform 0.3s ease;
+          }
+
+          .sidebar-header {
+               padding: 22px 20px;
+               border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+               display: flex;
+               align-items: center;
+               justify-content: space-between;
+          }
+
+          .brand {
+               display: flex;
+               align-items: center;
+               gap: 10px;
+               font-size: 18px;
+               font-weight: 700;
+               color: #fff;
+          }
+
+          .brand span {
+               background: var(--primary);
+               padding: 4px 9px;
+               border-radius: 8px;
+          }
+
+          .sub-pill {
+               margin: 12px 14px 4px;
+               padding: 10px 12px;
+               border-radius: 10px;
+               background: rgba(255, 255, 255, 0.07);
+               font-size: 12px;
+          }
+
+          .nav-menu {
+               list-style: none;
+               padding: 12px;
+               flex: 1;
+               overflow-y: auto;
+          }
+
+          .nav-item {
+               margin-bottom: 6px;
+          }
+
+          .nav-link {
+               width: 100%;
+               display: flex;
+               align-items: center;
+               justify-content: space-between;
+               padding: 11px 14px;
+               border-radius: 10px;
+               background: transparent;
+               border: none;
+               color: #94a3b8;
+               font-size: 14px;
+               font-weight: 500;
+               cursor: pointer;
+               text-align: left;
+               transition: 0.2s;
+          }
+
+          .nav-link:hover {
+               background: rgba(255, 255, 255, 0.06);
+               color: #fff;
+          }
+
+          .nav-link.active {
+               background: var(--primary);
+               color: #fff;
+               font-weight: 600;
+          }
+
+          .nav-badge {
+               font-size: 11px;
+               padding: 2px 7px;
+               border-radius: 999px;
+               background: rgba(255, 255, 255, 0.14);
+               color: #fff;
+          }
+
+          .nav-badge.danger {
+               background: var(--danger);
+          }
+
+          .nav-badge.warning {
+               background: var(--warning);
+               color: #000;
+               font-weight: 700;
+          }
+
+          .sidebar-footer {
+               padding: 16px;
+               border-top: 1px solid rgba(255, 255, 255, 0.08);
+          }
+
+          .user-box {
+               display: flex;
+               align-items: center;
+               justify-content: space-between;
+               margin-bottom: 12px;
+               font-size: 13px;
+          }
+
+          .main-content {
+               margin-left: 270px;
+               flex: 1;
+               padding: 24px 32px;
+          }
+
+          .topbar {
+               display: flex;
+               flex-wrap: wrap;
+               align-items: center;
+               justify-content: space-between;
+               gap: 16px;
+               margin-bottom: 24px;
+          }
+
+          .page-title h1 {
+               font-size: 24px;
+               font-weight: 700;
+          }
+
+          .page-title p {
+               color: var(--text-muted);
+               font-size: 13px;
+               margin-top: 3px;
+          }
+
+          .topbar-actions {
+               display: flex;
+               align-items: center;
+               gap: 10px;
+               flex-wrap: wrap;
+          }
+
+          /* STATS CARDS */
+          .stats-grid {
+               display: grid;
+               grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+               gap: 18px;
+               margin-bottom: 26px;
+          }
+
+          .stat-card {
+               background: var(--bg-card);
+               padding: 20px;
+               border-radius: var(--radius);
+               box-shadow: var(--shadow);
+               border: 1px solid var(--border-color);
+          }
+
+          .stat-label {
+               font-size: 13px;
+               color: var(--text-muted);
+               font-weight: 600;
+               margin-bottom: 8px;
+          }
+
+          .stat-value {
+               font-size: 22px;
+               font-weight: 800;
+          }
+
+          .stat-sub {
+               font-size: 12px;
+               margin-top: 6px;
+               color: var(--text-muted);
+          }
+
+          /* CARDS & TABLES */
+          .card {
+               background: var(--bg-card);
+               border-radius: var(--radius);
+               box-shadow: var(--shadow);
+               border: 1px solid var(--border-color);
+               padding: 20px;
+               margin-bottom: 24px;
+          }
+
+          .card-header {
+               display: flex;
+               flex-wrap: wrap;
+               align-items: center;
+               justify-content: space-between;
+               gap: 12px;
+               margin-bottom: 18px;
+          }
+
+          .filters-bar {
+               display: flex;
+               flex-wrap: wrap;
+               gap: 12px;
+               margin-bottom: 18px;
+          }
+
+          .filters-bar .form-control {
+               max-width: 240px;
+          }
+
+          .table-responsive {
+               overflow-x: auto;
+          }
+
+          table {
+               width: 100%;
+               border-collapse: collapse;
+               font-size: 13.5px;
+          }
+
+          th,
+          td {
+               padding: 13px 14px;
+               text-align: left;
+               border-bottom: 1px solid var(--border-color);
+          }
+
+          th {
+               font-weight: 700;
+               color: var(--text-muted);
+               font-size: 12px;
+               text-transform: uppercase;
+               letter-spacing: 0.04em;
+          }
+
+          tr:hover td {
+               background: rgba(37, 99, 235, 0.03);
+          }
+
+          .person-link {
+               color: var(--primary);
+               font-weight: 700;
+               cursor: pointer;
+               text-decoration: none;
+          }
+
+          .person-link:hover {
+               text-decoration: underline;
+          }
+
+          /* BADGES */
+          .badge {
+               display: inline-block;
+               padding: 4px 10px;
+               border-radius: 999px;
+               font-size: 11.5px;
+               font-weight: 700;
+          }
+
+          .badge-given {
+               background: var(--info-bg);
+               color: var(--info);
+          }
+
+          .badge-taken {
+               background: var(--warning-bg);
+               color: var(--warning);
+          }
+
+          .badge-paid {
+               background: var(--success-bg);
+               color: var(--success);
+          }
+
+          .badge-overdue {
+               background: var(--danger-bg);
+               color: var(--danger);
+          }
+
+          /* DEBTORS DIRECTORY GRID */
+          .debtors-grid {
+               display: grid;
+               grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+               gap: 18px;
+          }
+
+          .debtor-card {
+               background: var(--bg-card);
+               border: 1px solid var(--border-color);
+               border-radius: var(--radius);
+               padding: 18px;
+               box-shadow: var(--shadow);
+          }
+
+          /* PROFILE VIEW */
+          .profile-grid {
+               display: grid;
+               grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+               gap: 14px;
+               margin-top: 14px;
+          }
+
+          .info-item {
+               background: var(--bg-main);
+               padding: 12px 14px;
+               border-radius: 8px;
+          }
+
+          .info-item small {
+               display: block;
+               color: var(--text-muted);
+               font-size: 11.5px;
+               margin-bottom: 3px;
+          }
+
+          /* MODALS */
+          .modal-backdrop {
+               position: fixed;
+               inset: 0;
+               background: rgba(15, 23, 42, 0.65);
+               display: none;
+               align-items: center;
+               justify-content: center;
+               padding: 16px;
+               z-index: 999;
+          }
+
+          .modal-backdrop.open {
+               display: flex;
+          }
+
+          .modal {
+               background: var(--bg-card);
+               width: 100%;
+               max-width: 680px;
+               max-height: 92vh;
+               overflow-y: auto;
+               border-radius: 16px;
+               padding: 24px;
+               box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+          }
+
+          .modal-header {
+               display: flex;
+               align-items: center;
+               justify-content: space-between;
+               margin-bottom: 18px;
+               padding-bottom: 12px;
+               border-bottom: 1px solid var(--border-color);
+          }
+
+          .form-grid-2 {
+               display: grid;
+               grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+               gap: 14px;
+          }
+
+          .mobile-menu-btn {
+               display: none;
+          }
+
+          .toast {
+               position: fixed;
+               bottom: 22px;
+               right: 22px;
+               background: #1e293b;
+               color: #fff;
+               padding: 12px 20px;
+               border-radius: 10px;
+               font-size: 14px;
+               box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+               z-index: 2000;
+               display: none;
+          }
+
+          @media (max-width: 900px) {
+               .sidebar {
+                    transform: translateX(-100%);
+               }
+
+               .sidebar.open {
+                    transform: translateX(0);
+               }
+
+               .main-content {
+                    margin-left: 0;
+                    padding: 18px;
+               }
+
+               .mobile-menu-btn {
+                    display: inline-flex;
+               }
+          }
+     </style>
+</head>
+
+<body>
+
+     <!-- AUTH SCREEN -->
+     <div id="authScreen" class="auth-wrapper">
+          <div class="auth-card">
+               <div class="auth-logo">
+                    <div class="icon-box">₿</div>
+                    <h2>Qarz Daftarim Pro</h2>
+                    <p style="color: var(--text-muted); font-size: 13px; margin-top: 4px;">Oylik obuna asosida ishlovchi
+                         qarz boshqaruv tizimi</p>
+               </div>
+
+               <div class="auth-tabs">
+                    <button type="button" class="auth-tab active" id="tabLogin"
+                         onclick="switchAuthTab('login')">Kirish</button>
+                    <button type="button" class="auth-tab" id="tabRegister"
+                         onclick="switchAuthTab('register')">Ro'yxatdan o'tish</button>
+               </div>
+
+               <!-- LOGIN FORM -->
+               <form id="loginForm" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                         <label>Login (Foydalanuvchi nomi yoki email)</label>
+                         <input type="text" id="loginUsername" class="form-control" placeholder="Login kiriting..."
+                              required>
+                    </div>
+                    <div class="form-group">
+                         <label>Parol</label>
+                         <input type="password" id="loginPassword" class="form-control" placeholder="••••••••" required>
+                    </div>
+                    <div class="remember-row">
+                         <label>
+                              <input type="checkbox" id="rememberMe" checked>
+                              Login va parolni eslab qolish
+                         </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Tizimga kirish</button>
+               </form>
+
+               <!-- REGISTER FORM -->
+               <form id="registerForm" style="display: none;" onsubmit="handleRegister(event)">
+                    <div class="form-group">
+                         <label>To'liq ismingiz</label>
+                         <input type="text" id="regFullName" class="form-control" placeholder="Alisher Valiyev"
+                              required>
+                    </div>
+                    <div class="form-group">
+                         <label>Telefon raqamingiz</label>
+                         <input type="text" id="regPhone" class="form-control" placeholder="+998 90 123 45 67" required>
+                    </div>
+                    <div class="form-group">
+                         <label>Yangi Login</label>
+                         <input type="text" id="regUsername" class="form-control" placeholder="alisher99" required>
+                    </div>
+                    <div class="form-group">
+                         <label>Yangi Parol</label>
+                         <input type="password" id="regPassword" class="form-control" placeholder="Kamida 4 ta belgi"
+                              minlength="4" required>
+                    </div>
+                    <div class="remember-row">
+                         <label>
+                              <input type="checkbox" id="regRemember" checked>
+                              Ma'lumotlarni eslab qolish
+                         </label>
+                    </div>
+                    <button type="submit" class="btn btn-success btn-block">Ro'yxatdan o'tish</button>
+               </form>
+          </div>
+     </div>
+
+     <!-- PAYWALL / SUBSCRIPTION EXPIRED SCREEN -->
+     <div id="paywallScreen" class="auth-wrapper" style="display: none;">
+          <div class="auth-card" style="max-width: 490px;">
+               <div class="auth-logo">
+                    <div class="icon-box" style="background: var(--danger);">🔒</div>
+                    <h2>Oylik obuna muddati tugagan!</h2>
+                    <p style="color: var(--text-muted); font-size: 13.5px; margin-top: 6px;" id="paywallUserGreeting">
+                         Hurmatli foydalanuvchi, tizimdan foydalanishni davom ettirish uchun oylik to'lovni amalga
+                         oshiring.
+                    </p>
+               </div>
+
+               <div class="paywall-box">
+                    <div style="font-size: 13px; color: var(--danger); font-weight: 700;">HOLAT: KIRISH CHEKLANGAN
+                         (MUDDAT TUGAGAN)</div>
+                    <div style="font-size: 12.5px; margin-top: 4px;" id="paywallExpireInfo">Obuna tugagan sana: -</div>
+               </div>
+
+               <div class="payment-card-info" id="paymentCardDetails"></div>
+
+               <form onsubmit="submitPaymentProof(event)">
+                    <div class="form-group">
+                         <label>Tanlangan tarif (Oylik to'lov)</label>
+                         <select id="payPlanMonths" class="form-control" required></select>
+                    </div>
+                    <div class="form-group">
+                         <label>To'lov cheki ID yoki Karta oxirgi 4 raqami *</label>
+                         <input type="text" id="payProofNote" class="form-control"
+                              placeholder="Masalan: Chek #84920 yoki karta *4512 dan to'landi" required>
+                    </div>
+                    <button type="submit" class="btn btn-success btn-block">💳 To'lov qildim — So'rov yuborish</button>
+                    <button type="button" class="btn btn-outline btn-block" style="margin-top: 10px;"
+                         onclick="logout()">Boshqa hisob bilan kirish</button>
+               </form>
+          </div>
+     </div>
+
+     <!-- MAIN APP SECTION -->
+     <div id="appScreen" class="app-container">
+          <aside class="sidebar" id="sidebar">
+               <div class="sidebar-header">
+                    <div class="brand"><span>QD</span> Qarz Daftarim</div>
+                    <button type="button" class="btn btn-sm btn-outline mobile-menu-btn"
+                         style="color:#fff; border-color:#334155;" onclick="toggleSidebar()">✕</button>
+               </div>
+
+               <div class="sub-pill" id="sidebarSubStatus">
+                    Obuna: <strong style="color: #10b981;">Faol</strong>
+               </div>
+
+               <ul class="nav-menu">
+                    <li class="nav-item">
+                         <button type="button" class="nav-link active" data-page="dashboard"
+                              onclick="navigate('dashboard')">
+                              <span>📊 Umumiy ko'rinish</span>
+                         </button>
+                    </li>
+                    <li class="nav-item">
+                         <button type="button" class="nav-link" data-page="all" onclick="navigate('all')">
+                              <span>📋 Barcha qarzlar</span>
+                              <span class="nav-badge" id="badgeAll">0</span>
+                         </button>
+                    </li>
+                    <li class="nav-item">
+                         <button type="button" class="nav-link" data-page="given" onclick="navigate('given')">
+                              <span>📤 Berilgan (Olinadigan)</span>
+                              <span class="nav-badge" id="badgeGiven">0</span>
+                         </button>
+                    </li>
+                    <li class="nav-item">
+                         <button type="button" class="nav-link" data-page="taken" onclick="navigate('taken')">
+                              <span>📥 Olingan (Beriladigan)</span>
+                              <span class="nav-badge" id="badgeTaken">0</span>
+                         </button>
+                    </li>
+                    <li class="nav-item">
+                         <button type="button" class="nav-link" data-page="overdue" onclick="navigate('overdue')">
+                              <span>⚠️ Muddati o'tganlar</span>
+                              <span class="nav-badge danger" id="badgeOverdue">0</span>
+                         </button>
+                    </li>
+                    <li class="nav-item">
+                         <button type="button" class="nav-link" data-page="debtors" onclick="navigate('debtors')">
+                              <span>👥 Qarzdorlar (Bitta-bitta)</span>
+                              <span class="nav-badge" id="badgeDebtors">0</span>
+                         </button>
+                    </li>
+                    <li class="nav-item" id="navAdminItem"
+                         style="display: none; margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.1);">
+                         <button type="button" class="nav-link" data-page="admin_panel"
+                              onclick="navigate('admin_panel')">
+                              <span>👑 Admin: Obunalar</span>
+                              <span class="nav-badge warning" id="badgePendingPay">0</span>
+                         </button>
+                    </li>
+               </ul>
+               <div class="sidebar-footer">
+                    <div class="user-box">
+                         <div>
+                              <div style="font-weight: 700; color: #fff;" id="currentUserFull">Foydalanuvchi</div>
+                              <div style="font-size: 11px; color: #94a3b8;" id="currentUserLogin">@login</div>
+                         </div>
+                         <button type="button" class="btn btn-sm btn-outline" style="color:#fff; border-color:#334155;"
+                              onclick="toggleTheme()" title="Mavzuni o'zgartirish">🌓</button>
+                    </div>
+                    <button type="button" class="btn btn-danger btn-sm btn-block" onclick="logout()">Chiqish</button>
+               </div>
+          </aside>
+
+          <main class="main-content">
+               <div class="topbar">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                         <button type="button" class="btn btn-outline mobile-menu-btn"
+                              onclick="toggleSidebar()">☰</button>
+                         <div class="page-title">
+                              <h1 id="pageHeading">Umumiy ko'rinish</h1>
+                              <p id="pageSubheading">Barcha moliyaviy majburiyatlar statistikasi</p>
+                         </div>
+                    </div>
+                    <div class="topbar-actions">
+                         <button type="button" class="btn btn-outline btn-sm" onclick="exportJSON()">⬇️ Zaxira
+                              (JSON)</button>
+                         <label class="btn btn-outline btn-sm" style="cursor: pointer;">
+                              ⬆️ Tiklash
+                              <input type="file" accept=".json" style="display: none;" onchange="importJSON(event)">
+                         </label>
+                         <button type="button" class="btn btn-primary" onclick="openDebtModal()">+ Yangi qarz
+                              yozish</button>
+                    </div>
+               </div>
+
+               <div id="demoNoticeBanner" class="demo-banner" style="display: none;">
+                    <div>
+                         <strong>Demo rejim:</strong> Kiritilgan yoki o'zgartirilgan ma'lumotlar faqat shu sessiya
+                         vaqtida ishlaydi va chiqqaningizda saqlanmasdan tozalanadi.
+                    </div>
+                    <button type="button" class="btn btn-sm btn-outline" onclick="resetDemoSession()">Demo ma'lumotlarni
+                         tiklash</button>
+               </div>
+
+               <!-- DYNAMIC CONTENT AREA -->
+               <div id="pageContent"></div>
+          </main>
+     </div>
+
+     <!-- ADD / EDIT DEBT MODAL -->
+     <div class="modal-backdrop" id="debtModal">
+          <div class="modal">
+               <div class="modal-header">
+                    <h3 id="debtModalTitle">Yangi qarz yozish</h3>
+                    <button type="button" class="btn btn-sm btn-outline" onclick="closeModal('debtModal')">✕</button>
+               </div>
+               <form id="debtForm" onsubmit="saveDebt(event)">
+                    <input type="hidden" id="debtId">
+                    <div class="form-grid-2">
+                         <div class="form-group">
+                              <label>Qarz turi *</label>
+                              <select id="debtType" class="form-control" required>
+                                   <option value="given">Berilgan qarz (Menga qaytarilishi kerak)</option>
+                                   <option value="taken">Olingan qarz (Men qaytarishim kerak)</option>
+                              </select>
+                         </div>
+                         <div class="form-group">
+                              <label>Shaxs / Qarzdor F.I.SH *</label>
+                              <input type="text" id="personName" list="existingPeople" class="form-control"
+                                   placeholder="Karimov Sardor Rustamovich" required onchange="autofillPersonDetails()">
+                              <datalist id="existingPeople"></datalist>
+                         </div>
+                         <div class="form-group">
+                              <label>Telefon raqami *</label>
+                              <input type="text" id="personPhone" class="form-control" placeholder="+998 90 123 45 67"
+                                   required>
+                         </div>
+                         <div class="form-group">
+                              <label>Qo'shimcha telefon / Telegram</label>
+                              <input type="text" id="personAltContact" class="form-control"
+                                   placeholder="@username yoki +998...">
+                         </div>
+                         <div class="form-group">
+                              <label>Pasport seriya / JSHSHIR</label>
+                              <input type="text" id="personPassport" class="form-control" placeholder="AD 1234567">
+                         </div>
+                         <div class="form-group">
+                              <label>Yashash / Ish manzili</label>
+                              <input type="text" id="personAddress" class="form-control"
+                                   placeholder="Samarqand sh., Registon ko'chasi 12">
+                         </div>
+                         <div class="form-group">
+                              <label>Kafil shaxs (F.I.SH va tel)</label>
+                              <input type="text" id="personGuarantor" class="form-control"
+                                   placeholder="Aliyev Bobur (+998 91 ...)">
+                         </div>
+                         <div class="form-group">
+                              <label>Valyuta *</label>
+                              <select id="debtCurrency" class="form-control" required>
+                                   <option value="UZS">UZS (So'm)</option>
+                                   <option value="USD">USD ($ Dollar)</option>
+                                   <option value="EUR">EUR (€ Yevro)</option>
+                                   <option value="RUB">RUB (₽ Rubl)</option>
+                              </select>
+                         </div>
+                         <div class="form-group">
+                              <label>Umumiy qarz summasi *</label>
+                              <input type="number" id="debtAmount" class="form-control" min="1" step="any"
+                                   placeholder="1000000" required>
+                         </div>
+                         <div class="form-group">
+                              <label>Oldindan to'langan summa</label>
+                              <input type="number" id="debtPaid" class="form-control" min="0" step="any" value="0">
+                         </div>
+                         <div class="form-group">
+                              <label>Berilgan / Olingan sana *</label>
+                              <input type="date" id="debtStartDate" class="form-control" required>
+                         </div>
+                         <div class="form-group">
+                              <label>Qaytarish muddati (Deadline) *</label>
+                              <input type="date" id="debtDueDate" class="form-control" required>
+                         </div>
+                    </div>
+                    <div class="form-group" style="margin-top: 10px;">
+                         <label>Nima maqsadda / Izoh / Tilxat ma'lumoti</label>
+                         <textarea id="debtNote" class="form-control" rows="2"
+                              placeholder="Masalan: Do'kon aylanmasi uchun berildi..."></textarea>
+                    </div>
+                    <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 18px;">
+                         <button type="button" class="btn btn-outline" onclick="closeModal('debtModal')">Bekor
+                              qilish</button>
+                         <button type="submit" class="btn btn-primary">Saqlash</button>
+                    </div>
+               </form>
+          </div>
+     </div>
+
+     <!-- INSTALLMENT / PARTIAL PAYMENT MODAL -->
+     <div class="modal-backdrop" id="paymentModal">
+          <div class="modal" style="max-width: 460px;">
+               <div class="modal-header">
+                    <h3>To'lov qo'shish (Bo'lib to'lash)</h3>
+                    <button type="button" class="btn btn-sm btn-outline" onclick="closeModal('paymentModal')">✕</button>
+               </div>
+               <form onsubmit="submitPayment(event)">
+                    <input type="hidden" id="payDebtId">
+                    <div id="payDebtSummary"
+                         style="background: var(--bg-main); padding: 12px; border-radius: 8px; margin-bottom: 14px; font-size: 13px;">
+                    </div>
+                    <div class="form-group">
+                         <label>To'lov summasi *</label>
+                         <input type="number" id="payAmount" class="form-control" min="1" step="any" required>
+                    </div>
+                    <div class="form-group">
+                         <label>To'lov sanasi *</label>
+                         <input type="date" id="payDate" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                         <label>Izoh (Naqd, karta, bank orqali)</label>
+                         <input type="text" id="payNote" class="form-control"
+                              placeholder="Masalan: Karta orqali o'tkazildi">
+                    </div>
+                    <div style="display: flex; justify-content: flex-end; gap: 10px;">
+                         <button type="button" class="btn btn-outline" onclick="closeModal('paymentModal')">Bekor
+                              qilish</button>
+                         <button type="submit" class="btn btn-success">To'lovni tasdiqlash</button>
+                    </div>
+               </form>
+          </div>
+     </div>
+
+     <!-- ADMIN EXTEND SUBSCRIPTION MODAL -->
+     <div class="modal-backdrop" id="adminSubModal">
+          <div class="modal" style="max-width: 440px;">
+               <div class="modal-header">
+                    <h3>Foydalanuvchi obunasini boshqarish</h3>
+                    <button type="button" class="btn btn-sm btn-outline"
+                         onclick="closeModal('adminSubModal')">✕</button>
+               </div>
+               <form onsubmit="saveAdminSubChange(event)">
+                    <input type="hidden" id="adminTargetUser">
+                    <div id="adminTargetInfo"
+                         style="background: var(--bg-main); padding: 12px; border-radius: 8px; margin-bottom: 14px; font-size: 13px;">
+                    </div>
+                    <div class="form-group">
+                         <label>Tezkor uzaytirish</label>
+                         <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                              <button type="button" class="btn btn-sm btn-success" onclick="quickExtendDays(30)">+30 kun
+                                   (1 oy)</button>
+                              <button type="button" class="btn btn-sm btn-success" onclick="quickExtendDays(90)">+90 kun
+                                   (3 oy)</button>
+                              <button type="button" class="btn btn-sm btn-danger" onclick="quickBlockUser()">Hoziroq
+                                   bloklash</button>
+                         </div>
+                    </div>
+                    <div class="form-group">
+                         <label>Yoki aniq tugash sanasini belgilang *</label>
+                         <input type="date" id="adminNewExpiryDate" class="form-control" required>
+                    </div>
+                    <div style="display: flex; justify-content: flex-end; gap: 10px;">
+                         <button type="button" class="btn btn-outline" onclick="closeModal('adminSubModal')">Bekor
+                              qilish</button>
+                         <button type="submit" class="btn btn-primary">Saqlash</button>
+                    </div>
+               </form>
+          </div>
+     </div>
+
+     <div id="toast" class="toast"></div>
+
+     <script>
+          const USERS_KEY = 'qd_sub_users_v4';
+          const SESSION_KEY = 'qd_sub_session_v4';
+          const REMEMBER_KEY = 'qd_sub_remember_v4';
+          const SETTINGS_KEY = 'qd_sub_settings_v4';
+          const PAY_REQ_KEY = 'qd_sub_pay_requests_v4';
+          const THEME_KEY = 'qd_theme_v1';
+
+          const ADMIN_LOGIN = 'shohjahonsaparbayev77@gmail.com';
+          const ADMIN_PASS = 'shohjahon19032012';
+          const DEMO_LOGIN = 'demo';
+          const DEMO_PASS = '123';
+
+          let currentUser = null;
+          let blockedCandidateUser = null;
+          let demoSessionDebts = null;
+          let currentPage = 'dashboard';
+          let selectedPersonName = null;
+          let filterSearch = '';
+          let filterCurrency = 'ALL';
+          let filterStatus = 'ALL';
+
+          function normalizeLogin(val) {
+               return String(val || '').trim().toLowerCase();
+          }
+
+          function isDemoUser(user) {
+               return !!user && normalizeLogin(user.username) === DEMO_LOGIN;
+          }
+
+          window.addEventListener('DOMContentLoaded', () => {
+               initTheme();
+               seedDefaultAccountsAndSettings();
+               prefillRememberedLogin();
+               checkAutoLogin();
+          });
+
+          function initTheme() {
+               const savedTheme = localStorage.getItem(THEME_KEY) || 'light';
+               document.documentElement.setAttribute('data-theme', savedTheme);
+          }
+
+          function toggleTheme() {
+               const current = document.documentElement.getAttribute('data-theme');
+               const next = current === 'dark' ? 'light' : 'dark';
+               document.documentElement.setAttribute('data-theme', next);
+               localStorage.setItem(THEME_KEY, next);
+          }
+
+          function showToast(msg) {
+               const el = document.getElementById('toast');
+               el.textContent = msg;
+               el.style.display = 'block';
+               clearTimeout(window._toastTimer);
+               window._toastTimer = setTimeout(() => { el.style.display = 'none'; }, 3500);
+          }
+
+          function getTodayStr(offsetDays = 0) {
+               const d = new Date();
+               d.setDate(d.getDate() + offsetDays);
+               return d.toISOString().split('T')[0];
+          }
+
+          function getSettings() {
+               const def = {
+                    monthlyPrice: 50000,
+                    cardNumber: '8600 1234 5678 9012',
+                    cardHolder: 'SHOHJAHON SAPARBAYEV',
+                    adminTelegram: '@admin_qarzdaftar',
+                    trialDays: 3
+               };
+               return Object.assign(def, JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{}'));
+          }
+
+          function saveSettings(s) {
+               localStorage.setItem(SETTINGS_KEY, JSON.stringify(s));
+          }
+
+          function getUsers() {
+               return JSON.parse(localStorage.getItem(USERS_KEY) || '[]');
+          }
+
+          function saveUsers(users) {
+               localStorage.setItem(USERS_KEY, JSON.stringify(users));
+          }
+
+          function getPayRequests() {
+               return JSON.parse(localStorage.getItem(PAY_REQ_KEY) || '[]');
+          }
+
+          function savePayRequests(reqs) {
+               localStorage.setItem(PAY_REQ_KEY, JSON.stringify(reqs));
+          }
+
+          function getDemoInitialSnapshot() {
+               return [
+                    {
+                         id: 'demo_d1',
+                         type: 'given',
+                         personName: 'Karimov Sardor Rustamovich',
+                         phone: '+998 90 455 11 22',
+                         altContact: '@sardor_karimov',
+                         passport: 'AD 4421901',
+                         address: "Samarqand sh., Amir Temur ko'chasi 45",
+                         guarantor: 'Toshmatov Bekzod (+998 91 555 00 11)',
+                         currency: 'UZS',
+                         amount: 12000000,
+                         paid: 4000000,
+                         startDate: getTodayStr(-25),
+                         dueDate: getTodayStr(15),
+                         note: "Demo qarz: Qurilish mollari uchun berilgan.",
+                         payments: [{ date: getTodayStr(-10), amount: 4000000, note: "Birinchi qism to'landi" }]
+                    },
+                    {
+                         id: 'demo_d2',
+                         type: 'taken',
+                         personName: "Nazarov Ulug'bek",
+                         phone: '+998 97 300 44 55',
+                         altContact: '@ulugbek_optom',
+                         passport: 'AC 1122334',
+                         address: 'Samarqand, Urgut savdo majmuasi',
+                         guarantor: "O'zim",
+                         currency: 'USD',
+                         amount: 1500,
+                         paid: 500,
+                         startDate: getTodayStr(-15),
+                         dueDate: getTodayStr(-3),
+                         note: 'Demo qarz: Tovar uchun olingan (muddati o\'tgan)',
+                         payments: [{ date: getTodayStr(-5), amount: 500, note: "Qisman qaytarildi" }]
+                    }
+               ];
+          }
+
+          function seedDefaultAccountsAndSettings() {
+               const users = getUsers();
+               const normalizedAdmin = normalizeLogin(ADMIN_LOGIN);
+               let changed = false;
+
+               let adminUser = users.find(u => u.role === 'admin' || normalizeLogin(u.username) === normalizedAdmin);
+               if (!adminUser) {
+                    users.unshift({
+                         fullName: 'Tizim Egasi (Super Admin)',
+                         phone: '+998 90 000 00 01',
+                         username: normalizedAdmin,
+                         password: ADMIN_PASS,
+                         role: 'admin',
+                         subExpiresAt: '2099-12-31'
+                    });
+                    changed = true;
+               } else {
+                    if (normalizeLogin(adminUser.username) !== normalizedAdmin || adminUser.password !== ADMIN_PASS || adminUser.role !== 'admin') {
+                         adminUser.username = normalizedAdmin;
+                         adminUser.password = ADMIN_PASS;
+                         adminUser.role = 'admin';
+                         adminUser.subExpiresAt = '2099-12-31';
+                         changed = true;
+                    }
+               }
+
+               let demoUser = users.find(u => normalizeLogin(u.username) === DEMO_LOGIN);
+               if (!demoUser) {
+                    users.push({
+                         fullName: 'Demo Hisob (Vaqtinchalik)',
+                         phone: '+998 90 111 22 33',
+                         username: DEMO_LOGIN,
+                         password: DEMO_PASS,
+                         role: 'user',
+                         subExpiresAt: getTodayStr(30)
+                    });
+                    changed = true;
+               } else if (demoUser.password !== DEMO_PASS) {
+                    demoUser.password = DEMO_PASS;
+                    changed = true;
+               }
+
+               if (changed) {
+                    saveUsers(users);
+               }
+
+               localStorage.removeItem(`qd_debts_${DEMO_LOGIN}`);
+               seedDemoDebtsIfEmpty(normalizedAdmin);
+          }
+
+          // --- SUBSCRIPTION CHECK LOGIC ---
+          function isSubscriptionActive(user) {
+               if (!user) return false;
+               if (user.role === 'admin' || isDemoUser(user)) return true;
+               if (!user.subExpiresAt) return false;
+               const today = getTodayStr(0);
+               return user.subExpiresAt >= today;
+          }
+
+          function getRemainingSubDays(user) {
+               if (user.role === 'admin' || isDemoUser(user)) return 9999;
+               const today = new Date(getTodayStr(0));
+               const exp = new Date(user.subExpiresAt);
+               return Math.ceil((exp - today) / (1000 * 60 * 60 * 24));
+          }
+
+          // --- AUTHENTICATION ---
+          function switchAuthTab(tab) {
+               document.getElementById('tabLogin').classList.toggle('active', tab === 'login');
+               document.getElementById('tabRegister').classList.toggle('active', tab === 'register');
+               document.getElementById('loginForm').style.display = tab === 'login' ? 'block' : 'none';
+               document.getElementById('registerForm').style.display = tab === 'register' ? 'block' : 'none';
+          }
+
+          function prefillRememberedLogin() {
+               const saved = JSON.parse(localStorage.getItem(REMEMBER_KEY) || 'null');
+               if (saved) {
+                    document.getElementById('loginUsername').value = saved.username || '';
+                    document.getElementById('loginPassword').value = saved.password || '';
+                    document.getElementById('rememberMe').checked = true;
+               }
+          }
+
+          function checkAutoLogin() {
+               const session = JSON.parse(localStorage.getItem(SESSION_KEY) || sessionStorage.getItem(SESSION_KEY) || 'null');
+               if (session && session.username) {
+                    const target = normalizeLogin(session.username);
+                    const found = getUsers().find(u => normalizeLogin(u.username) === target);
+                    if (found) {
+                         routeAfterAuth(found);
+                    }
+               }
+          }
+
+          function handleRegister(e) {
+               e.preventDefault();
+               const fullName = document.getElementById('regFullName').value.trim();
+               const phone = document.getElementById('regPhone').value.trim();
+               const username = normalizeLogin(document.getElementById('regUsername').value);
+               const password = document.getElementById('regPassword').value;
+               const remember = document.getElementById('regRemember').checked;
+
+               const users = getUsers();
+               if (users.some(u => normalizeLogin(u.username) === username)) {
+                    alert("Bu login band! Boshqa login tanlang.");
+                    return;
+               }
+
+               const settings = getSettings();
+               const newUser = {
+                    fullName,
+                    phone,
+                    username,
+                    password,
+                    role: 'user',
+                    subExpiresAt: getTodayStr(Number(settings.trialDays || 3))
+               };
+               users.push(newUser);
+               saveUsers(users);
+               completeLogin(newUser, remember);
+               showToast(`Hisob yaratildi! ${settings.trialDays} kunlik sinov muddati faollashtirildi.`);
+          }
+
+          function handleLogin(e) {
+               e.preventDefault();
+               const username = normalizeLogin(document.getElementById('loginUsername').value);
+               const password = document.getElementById('loginPassword').value;
+               const remember = document.getElementById('rememberMe').checked;
+
+               const user = getUsers().find(u => normalizeLogin(u.username) === username && u.password === password);
+               if (!user) {
+                    alert("Login yoki parol noto'g'ri!");
+                    return;
+               }
+               completeLogin(user, remember);
+          }
+
+          function completeLogin(user, remember) {
+               const normUser = normalizeLogin(user.username);
+               if (remember) {
+                    localStorage.setItem(REMEMBER_KEY, JSON.stringify({ username: normUser, password: user.password }));
+                    localStorage.setItem(SESSION_KEY, JSON.stringify({ username: normUser }));
+               } else {
+                    localStorage.removeItem(REMEMBER_KEY);
+                    localStorage.removeItem(SESSION_KEY);
+                    sessionStorage.setItem(SESSION_KEY, JSON.stringify({ username: normUser }));
+               }
+               routeAfterAuth(user);
+          }
+
+          function routeAfterAuth(user) {
+               const target = normalizeLogin(user.username);
+               const freshUser = getUsers().find(u => normalizeLogin(u.username) === target) || user;
+               if (!isSubscriptionActive(freshUser)) {
+                    showPaywallScreen(freshUser);
+                    return;
+               }
+               enterApp(freshUser);
+          }
+
+          function showPaywallScreen(user) {
+               blockedCandidateUser = user;
+               currentUser = null;
+               demoSessionDebts = null;
+               document.getElementById('authScreen').style.display = 'none';
+               document.getElementById('appScreen').style.display = 'none';
+               document.getElementById('paywallScreen').style.display = 'flex';
+
+               const settings = getSettings();
+               const price = Number(settings.monthlyPrice);
+
+               document.getElementById('paywallUserGreeting').textContent =
+                    `Hurmatli ${user.fullName} (@${user.username}), oylik obunangiz muddati tugaganligi sababli tizimga kirish vaqtincha to'xtatildi.`;
+               document.getElementById('paywallExpireInfo').textContent =
+                    `Obuna tugagan sana: ${user.subExpiresAt || 'Belgilanmagan'}`;
+
+               document.getElementById('paymentCardDetails').innerHTML = `
+                <div style="font-weight: 700; margin-bottom: 6px; color: var(--primary);">To'lov uchun rekvizitlar:</div>
+                <div>💳 Karta raqami: <strong>${escapeHtml(settings.cardNumber)}</strong></div>
+                <div>👤 Karta egasi: <strong>${escapeHtml(settings.cardHolder)}</strong></div>
+                <div>💵 1 oylik tarif narxi: <strong>${price.toLocaleString('uz-UZ')} so'm</strong></div>
+                <div style="margin-top: 6px; font-size: 12px; color: var(--text-muted);">
+                    To'lov qilgandan so'ng chek ma'lumotini kiriting yoki admin (${escapeHtml(settings.adminTelegram)}) bilan bog'laning.
+                </div>
+            `;
+
+               document.getElementById('payPlanMonths').innerHTML = `
+                <option value="1">1 oy (30 kun) — ${(price * 1).toLocaleString('uz-UZ')} so'm</option>
+                <option value="3">3 oy (90 kun) — ${(price * 3).toLocaleString('uz-UZ')} so'm</option>
+                <option value="6">6 oy (180 kun) — ${(price * 6).toLocaleString('uz-UZ')} so'm</option>
+                <option value="12">12 oy (365 kun) — ${(price * 12).toLocaleString('uz-UZ')} so'm</option>
+            `;
+          }
+
+          function submitPaymentProof(e) {
+               e.preventDefault();
+               if (!blockedCandidateUser) return;
+               const months = parseInt(document.getElementById('payPlanMonths').value, 10);
+               const proof = document.getElementById('payProofNote').value.trim();
+               const price = Number(getSettings().monthlyPrice) * months;
+
+               const reqs = getPayRequests();
+               reqs.unshift({
+                    id: 'req_' + Date.now(),
+                    username: normalizeLogin(blockedCandidateUser.username),
+                    fullName: blockedCandidateUser.fullName,
+                    phone: blockedCandidateUser.phone || '',
+                    months,
+                    amount: price,
+                    proof,
+                    date: new Date().toLocaleString('uz-UZ'),
+                    status: 'pending'
+               });
+               savePayRequests(reqs);
+               document.getElementById('payProofNote').value = '';
+               alert("To'lov so'rovingiz adminga yuborildi! Admin tasdiqlashi bilan hisobingiz faollashadi.");
+          }
+
+          function enterApp(user) {
+               currentUser = user;
+               blockedCandidateUser = null;
+               document.getElementById('authScreen').style.display = 'none';
+               document.getElementById('paywallScreen').style.display = 'none';
+               document.getElementById('appScreen').style.display = 'flex';
+
+               const demoMode = isDemoUser(user);
+               if (demoMode) {
+                    demoSessionDebts = getDemoInitialSnapshot();
+                    document.getElementById('demoNoticeBanner').style.display = 'flex';
+               } else {
+                    demoSessionDebts = null;
+                    document.getElementById('demoNoticeBanner').style.display = 'none';
+               }
+
+               document.getElementById('currentUserFull').textContent = user.fullName;
+               document.getElementById('currentUserLogin').textContent = '@' + user.username;
+
+               const subPill = document.getElementById('sidebarSubStatus');
+               if (user.role === 'admin') {
+                    subPill.innerHTML = `Rol: <strong style="color: #fbbf24;">Super Admin (Cheksiz)</strong>`;
+                    document.getElementById('navAdminItem').style.display = 'block';
+               } else if (demoMode) {
+                    subPill.innerHTML = `Rejim: <strong style="color: #fbbf24;">Demo (Saqlanmaydi)</strong>`;
+                    document.getElementById('navAdminItem').style.display = 'none';
+               } else {
+                    const daysLeft = getRemainingSubDays(user);
+                    const color = daysLeft <= 3 ? '#f87171' : '#34d399';
+                    subPill.innerHTML = `Obuna muddati: <strong style="color: ${color};">${user.subExpiresAt}</strong><br><span style="color:#94a3b8;">Qolgan vaqt: ${daysLeft} kun</span>`;
+                    document.getElementById('navAdminItem').style.display = 'none';
+               }
+
+               navigate('dashboard');
+          }
+
+          function resetDemoSession() {
+               if (!isDemoUser(currentUser)) return;
+               demoSessionDebts = getDemoInitialSnapshot();
+               updateBadges();
+               renderPage();
+               showToast("Demo ma'lumotlar boshlang'ich holatga qaytarildi");
+          }
+
+          function logout() {
+               localStorage.removeItem(SESSION_KEY);
+               sessionStorage.removeItem(SESSION_KEY);
+               if (isDemoUser(currentUser)) {
+                    localStorage.removeItem(`qd_debts_${DEMO_LOGIN}`);
+               }
+               currentUser = null;
+               blockedCandidateUser = null;
+               demoSessionDebts = null;
+               document.getElementById('demoNoticeBanner').style.display = 'none';
+               document.getElementById('appScreen').style.display = 'none';
+               document.getElementById('paywallScreen').style.display = 'none';
+               document.getElementById('authScreen').style.display = 'flex';
+               prefillRememberedLogin();
+          }
+
+          // --- DATA LAYER ---
+          function getUserDebtsKey() {
+               return `qd_debts_${normalizeLogin(currentUser.username)}`;
+          }
+
+          function getDebts() {
+               if (isDemoUser(currentUser)) {
+                    if (!Array.isArray(demoSessionDebts)) {
+                         demoSessionDebts = getDemoInitialSnapshot();
+                    }
+                    return demoSessionDebts;
+               }
+               return JSON.parse(localStorage.getItem(getUserDebtsKey()) || '[]');
+          }
+
+          function saveDebts(debts) {
+               if (isDemoUser(currentUser)) {
+                    demoSessionDebts = debts;
+                    updateBadges();
+                    return;
+               }
+               localStorage.setItem(getUserDebtsKey(), JSON.stringify(debts));
+               updateBadges();
+          }
+
+          function seedDemoDebtsIfEmpty(username) {
+               const key = `qd_debts_${normalizeLogin(username)}`;
+               if (localStorage.getItem(key)) return;
+               const sample = [
+                    {
+                         id: 'd1',
+                         type: 'given',
+                         personName: 'Karimov Sardor Rustamovich',
+                         phone: '+998 90 455 11 22',
+                         altContact: '@sardor_karimov',
+                         passport: 'AD 4421901',
+                         address: "Samarqand sh., Amir Temur ko'chasi 45",
+                         guarantor: 'Toshmatov Bekzod (+998 91 555 00 11)',
+                         currency: 'UZS',
+                         amount: 12000000,
+                         paid: 4000000,
+                         startDate: getTodayStr(-25),
+                         dueDate: getTodayStr(15),
+                         note: "Qurilish mollari do'koni uchun berilgan. Tilxat bor.",
+                         payments: [{ date: getTodayStr(-10), amount: 4000000, note: "Karta orqali to'landi" }]
+                    }
+               ];
+               localStorage.setItem(key, JSON.stringify(sample));
+          }
+
+          function getDebtStatus(debt) {
+               const remaining = debt.amount - debt.paid;
+               if (remaining <= 0.0001) return 'paid';
+               const today = getTodayStr(0);
+               if (debt.dueDate < today) return 'overdue';
+               return 'active';
+          }
+
+          function formatMoney(num, currency = 'UZS') {
+               const formatted = Number(num || 0).toLocaleString('uz-UZ', { maximumFractionDigits: 2 });
+               return `${formatted} ${currency}`;
+          }
+
+          function updateBadges() {
+               const debts = getDebts();
+               const givenActive = debts.filter(d => d.type === 'given' && getDebtStatus(d) !== 'paid').length;
+               const takenActive = debts.filter(d => d.type === 'taken' && getDebtStatus(d) !== 'paid').length;
+               const overdueCount = debts.filter(d => getDebtStatus(d) === 'overdue').length;
+               const uniquePeople = new Set(debts.map(d => d.personName.trim().toLowerCase())).size;
+
+               document.getElementById('badgeAll').textContent = debts.length;
+               document.getElementById('badgeGiven').textContent = givenActive;
+               document.getElementById('badgeTaken').textContent = takenActive;
+               document.getElementById('badgeOverdue').textContent = overdueCount;
+               document.getElementById('badgeDebtors').textContent = uniquePeople;
+
+               if (currentUser && currentUser.role === 'admin') {
+                    const pendingCount = getPayRequests().filter(r => r.status === 'pending').length;
+                    document.getElementById('badgePendingPay').textContent = pendingCount;
+               }
+          }
+
+          // --- NAVIGATION ---
+          function toggleSidebar() {
+               document.getElementById('sidebar').classList.toggle('open');
+          }
+
+          function navigate(page, personName = null) {
+               const target = normalizeLogin(currentUser.username);
+               const fresh = getUsers().find(u => normalizeLogin(u.username) === target) || currentUser;
+               if (!isSubscriptionActive(fresh)) {
+                    showPaywallScreen(fresh);
+                    return;
+               }
+
+               currentPage = page;
+               selectedPersonName = personName;
+               document.getElementById('sidebar').classList.remove('open');
+
+               document.querySelectorAll('.nav-link').forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.page === page);
+               });
+
+               updateBadges();
+               renderPage();
+          }
+
+          function renderPage() {
+               const container = document.getElementById('pageContent');
+               const heading = document.getElementById('pageHeading');
+               const subheading = document.getElementById('pageSubheading');
+
+               if (currentPage === 'dashboard') {
+                    heading.textContent = "Umumiy ko'rinish";
+                    subheading.textContent = "Berilgan, olingan va muddati o'tgan qarzlar balansi";
+                    container.innerHTML = renderDashboardHTML();
+               } else if (currentPage === 'all') {
+                    heading.textContent = "Barcha qarzlar ro'yxati";
+                    subheading.textContent = "Tizimga kiritilgan barcha qarz bitimlari";
+                    container.innerHTML = renderDebtListHTML('all');
+               } else if (currentPage === 'given') {
+                    heading.textContent = "Berilgan qarzlar (Olinishi kerak)";
+                    subheading.textContent = "Siz boshqalarga bergan va qaytarib olishingiz kerak bo'lgan mablag'lar";
+                    container.innerHTML = renderDebtListHTML('given');
+               } else if (currentPage === 'taken') {
+                    heading.textContent = "Olingan qarzlar (Berilishi kerak)";
+                    subheading.textContent = "Siz boshqalardan olgan va qaytarishingiz lozim bo'lgan qarzlar";
+                    container.innerHTML = renderDebtListHTML('taken');
+               } else if (currentPage === 'overdue') {
+                    heading.textContent = "⚠️ Muddati o'tgan qarzdorlar";
+                    subheading.textContent = "To'lov muddati o'tib ketgan faol qarzlar";
+                    container.innerHTML = renderDebtListHTML('overdue');
+               } else if (currentPage === 'debtors') {
+                    heading.textContent = "Qarzdorlar katalogi (Bitta-bitta)";
+                    subheading.textContent = "Har bir shaxs bo'yicha alohida balans va batafsil profilga o'tish";
+                    container.innerHTML = renderDebtorsDirectoryHTML();
+               } else if (currentPage === 'person_detail') {
+                    heading.textContent = selectedPersonName;
+                    subheading.textContent = "Shaxsiy varaqa, rekvizitlar va barcha qarz bitimlari tarixi";
+                    container.innerHTML = renderPersonDetailHTML(selectedPersonName);
+               } else if (currentPage === 'admin_panel' && currentUser.role === 'admin') {
+                    heading.textContent = "👑 Admin: Oylik obunalar va To'lovlar";
+                    subheading.textContent = "Foydalanuvchilarning oylik to'lovlarini tasdiqlash, muddat uzaytirish va bloklash";
+                    container.innerHTML = renderAdminPanelHTML();
+               }
+          }
+
+          // --- ADMIN PANEL VIEW ---
+          function renderAdminPanelHTML() {
+               const users = getUsers().filter(u => u.role !== 'admin');
+               const reqs = getPayRequests();
+               const settings = getSettings();
+
+               return `
+                <div class="card">
+                    <div class="card-header">
+                        <h3>💳 Tarif va Karta rekvizitlari sozlamalari</h3>
+                    </div>
+                    <form onsubmit="saveAdminSettingsForm(event)" class="form-grid-2">
+                        <div class="form-group">
+                            <label>Oylik obuna narxi (so'm)</label>
+                            <input type="number" id="setMonthlyPrice" class="form-control" value="${settings.monthlyPrice}" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Bepul sinov muddati (kun)</label>
+                            <input type="number" id="setTrialDays" class="form-control" value="${settings.trialDays}" required>
+                        </div>
+                        <div class="form-group">
+                            <label>To'lov qabul qiluvchi karta raqami</label>
+                            <input type="text" id="setCardNumber" class="form-control" value="${escapeHtml(settings.cardNumber)}" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Karta egasi F.I.SH</label>
+                            <input type="text" id="setCardHolder" class="form-control" value="${escapeHtml(settings.cardHolder)}" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Admin Telegram manzili</label>
+                            <input type="text" id="setAdminTg" class="form-control" value="${escapeHtml(settings.adminTelegram)}" required>
+                        </div>
+                        <div class="form-group" style="display: flex; align-items: flex-end;">
+                            <button type="submit" class="btn btn-primary btn-block">Sozlamalarni saqlash</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3>📩 Kelib tushgan to'lov so'rovlari (${reqs.filter(r => r.status === 'pending').length} ta yangi)</h3>
+                    </div>
+                    ${reqs.length === 0 ? "<p style='color: var(--text-muted);'>Hozircha to'lov so'rovlari yo'q.</p>" : `
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Foydalanuvchi</th>
+                                    <th>Tarif</th>
+                                    <th>Summa</th>
+                                    <th>Chek / Izoh</th>
+                                    <th>Sana</th>
+                                    <th>Holat / Amal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${reqs.map(r => `
+                                    <tr>
+                                        <td><strong>${escapeHtml(r.fullName)}</strong><br><small>@${escapeHtml(r.username)} (${escapeHtml(r.phone)})</small></td>
+                                        <td>${r.months} oy (${r.months * 30} kun)</td>
+                                        <td><strong>${Number(r.amount).toLocaleString('uz-UZ')} so'm</strong></td>
+                                        <td>${escapeHtml(r.proof)}</td>
+                                        <td>${escapeHtml(r.date)}</td>
+                                        <td>
+                                            ${r.status === 'pending' ? `
+                                                <button type="button" class="btn btn-sm btn-success" onclick="approvePaymentReq('${r.id}')">✅ Tasdiqlash</button>
+                                                <button type="button" class="btn btn-sm btn-danger" onclick="rejectPaymentReq('${r.id}')">✕ Rad etish</button>
+                                            ` : (r.status === 'approved'
+                         ? '<span class="badge badge-paid">Tasdiqlangan</span>'
+                         : '<span class="badge badge-overdue">Rad etilgan</span>')}
+                                        </td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>`}
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3>👥 Barcha foydalanuvchilar va obuna holati (${users.length} ta)</h3>
+                    </div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Foydalanuvchi</th>
+                                    <th>Telefon</th>
+                                    <th>Obuna tugash sanasi</th>
+                                    <th>Holat</th>
+                                    <th>Boshqarish</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${users.map(u => {
+                              const active = isSubscriptionActive(u);
+                              const days = getRemainingSubDays(u);
+                              return `
+                                        <tr>
+                                            <td><strong>${escapeHtml(u.fullName)}</strong><br><small>@${escapeHtml(u.username)}</small></td>
+                                            <td>${escapeHtml(u.phone || '-')}</td>
+                                            <td><strong>${u.subExpiresAt || '-'}</strong></td>
+                                            <td>
+                                                ${isDemoUser(u)
+                                        ? '<span class="badge badge-given">Demo hisob</span>'
+                                        : (active
+                                             ? `<span class="badge badge-paid">Faol (${days} kun qoldi)</span>`
+                                             : `<span class="badge badge-overdue">Bloklangan (Muddati tugagan)</span>`)}
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-sm btn-primary" onclick="openAdminSubModal('${escapeJs(u.username)}')">⚙️ Muddat / Bloklash</button>
+                                            </td>
+                                        </tr>
+                                    `;
+                         }).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+          }
+
+          function saveAdminSettingsForm(e) {
+               e.preventDefault();
+               saveSettings({
+                    monthlyPrice: Number(document.getElementById('setMonthlyPrice').value),
+                    trialDays: Number(document.getElementById('setTrialDays').value),
+                    cardNumber: document.getElementById('setCardNumber').value.trim(),
+                    cardHolder: document.getElementById('setCardHolder').value.trim(),
+                    adminTelegram: document.getElementById('setAdminTg').value.trim()
+               });
+               showToast("Tarif va karta ma'lumotlari yangilandi!");
+          }
+
+          function approvePaymentReq(reqId) {
+               const reqs = getPayRequests();
+               const req = reqs.find(r => r.id === reqId);
+               if (!req) return;
+
+               const users = getUsers();
+               const user = users.find(u => normalizeLogin(u.username) === normalizeLogin(req.username));
+               if (user) {
+                    const today = getTodayStr(0);
+                    const baseDate = (user.subExpiresAt && user.subExpiresAt > today) ? new Date(user.subExpiresAt) : new Date(today);
+                    baseDate.setDate(baseDate.getDate() + (req.months * 30));
+                    user.subExpiresAt = baseDate.toISOString().split('T')[0];
+                    saveUsers(users);
+               }
+
+               req.status = 'approved';
+               savePayRequests(reqs);
+               updateBadges();
+               renderPage();
+               showToast(`@${req.username} obunasi ${req.months} oyga uzaytirildi!`);
+          }
+
+          function rejectPaymentReq(reqId) {
+               const reqs = getPayRequests();
+               const req = reqs.find(r => r.id === reqId);
+               if (!req) return;
+               req.status = 'rejected';
+               savePayRequests(reqs);
+               updateBadges();
+               renderPage();
+               showToast("So'rov rad etildi");
+          }
+
+          function openAdminSubModal(username) {
+               const u = getUsers().find(item => normalizeLogin(item.username) === normalizeLogin(username));
+               if (!u) return;
+               document.getElementById('adminTargetUser').value = u.username;
+               document.getElementById('adminTargetInfo').innerHTML = `
+                <strong>${escapeHtml(u.fullName)}</strong> (@${escapeHtml(u.username)})<br>
+                Joriy tugash sanasi: <strong>${u.subExpiresAt}</strong>
+            `;
+               document.getElementById('adminNewExpiryDate').value = u.subExpiresAt >= getTodayStr(0) ? u.subExpiresAt : getTodayStr(30);
+               document.getElementById('adminSubModal').classList.add('open');
+          }
+
+          function quickExtendDays(days) {
+               const username = document.getElementById('adminTargetUser').value;
+               const u = getUsers().find(item => normalizeLogin(item.username) === normalizeLogin(username));
+               if (!u) return;
+               const today = getTodayStr(0);
+               const base = (u.subExpiresAt && u.subExpiresAt > today) ? new Date(u.subExpiresAt) : new Date(today);
+               base.setDate(base.getDate() + days);
+               document.getElementById('adminNewExpiryDate').value = base.toISOString().split('T')[0];
+          }
+
+          function quickBlockUser() {
+               document.getElementById('adminNewExpiryDate').value = getTodayStr(-1);
+          }
+
+          function saveAdminSubChange(e) {
+               e.preventDefault();
+               const username = document.getElementById('adminTargetUser').value;
+               const newDate = document.getElementById('adminNewExpiryDate').value;
+               const users = getUsers();
+               const u = users.find(item => normalizeLogin(item.username) === normalizeLogin(username));
+               if (u) {
+                    u.subExpiresAt = newDate;
+                    saveUsers(users);
+               }
+               closeModal('adminSubModal');
+               renderPage();
+               showToast(`@${username} uchun yangi sana saqlandi: ${newDate}`);
+          }
+
+          // --- DASHBOARD & DEBT VIEWS ---
+          function renderDashboardHTML() {
+               const debts = getDebts();
+               const currencies = ['UZS', 'USD', 'EUR', 'RUB'];
+
+               const calcRemaining = (type, curr) => debts
+                    .filter(d => d.type === type && d.currency === curr && getDebtStatus(d) !== 'paid')
+                    .reduce((acc, d) => acc + (d.amount - d.paid), 0);
+
+               const calcOverdue = (curr) => debts
+                    .filter(d => d.currency === curr && getDebtStatus(d) === 'overdue')
+                    .reduce((acc, d) => acc + (d.amount - d.paid), 0);
+
+               const formatMultiCurr = (fn) => {
+                    const parts = currencies
+                         .map(c => ({ c, val: fn(c) }))
+                         .filter(item => item.val > 0)
+                         .map(item => formatMoney(item.val, item.c));
+                    return parts.length ? parts.join(' + ') : '0 UZS';
+               };
+
+               const overdueList = debts.filter(d => getDebtStatus(d) === 'overdue');
+
+               return `
+                <div class="stats-grid">
+                    <div class="stat-card" style="border-left: 4px solid var(--info);">
+                        <div class="stat-label">OLINISHI KERAK (BERILGAN QARZLAR)</div>
+                        <div class="stat-value" style="color: var(--info);">${formatMultiCurr(c => calcRemaining('given', c))}</div>
+                        <div class="stat-sub">Faol berilgan qarzlar qoldig'i</div>
+                    </div>
+                    <div class="stat-card" style="border-left: 4px solid var(--warning);">
+                        <div class="stat-label">BERILISHI KERAK (OLINGAN QARZLAR)</div>
+                        <div class="stat-value" style="color: var(--warning);">${formatMultiCurr(c => calcRemaining('taken', c))}</div>
+                        <div class="stat-sub">Faol olingan qarzlar qoldig'i</div>
+                    </div>
+                    <div class="stat-card" style="border-left: 4px solid var(--danger);">
+                        <div class="stat-label">MUDDATI O'TGAN QARZLAR</div>
+                        <div class="stat-value" style="color: var(--danger);">${formatMultiCurr(c => calcOverdue(c))}</div>
+                        <div class="stat-sub">${overdueList.length} ta kechikkan bitim</div>
+                    </div>
+                    <div class="stat-card" style="border-left: 4px solid var(--success);">
+                        <div class="stat-label">JAMI YOPILGAN BITIMLAR</div>
+                        <div class="stat-value" style="color: var(--success);">${debts.filter(d => getDebtStatus(d) === 'paid').length} ta</div>
+                        <div class="stat-sub">Jami ${debts.length} ta yozuvdan</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3>⚠️ Diqqat talab: Muddati o'tgan qarzlar</h3>
+                        <button type="button" class="btn btn-sm btn-outline" onclick="navigate('overdue')">Barchasini ko'rish →</button>
+                    </div>
+                    ${overdueList.length === 0
+                         ? "<p style='color: var(--text-muted); font-size: 14px;'>Hozircha muddati o'tgan qarzlar yo'q. Ajoyib!</p>"
+                         : buildDebtTable(overdueList)}
+                </div>
+            `;
+          }
+
+          function renderDebtListHTML(mode) {
+               let debts = getDebts();
+               if (mode === 'given') debts = debts.filter(d => d.type === 'given');
+               if (mode === 'taken') debts = debts.filter(d => d.type === 'taken');
+               if (mode === 'overdue') debts = debts.filter(d => getDebtStatus(d) === 'overdue');
+
+               const filtered = debts.filter(d => {
+                    const q = filterSearch.toLowerCase();
+                    const matchText = !q ||
+                         d.personName.toLowerCase().includes(q) ||
+                         (d.phone && d.phone.toLowerCase().includes(q)) ||
+                         (d.note && d.note.toLowerCase().includes(q));
+                    const matchCurr = filterCurrency === 'ALL' || d.currency === filterCurrency;
+                    const st = getDebtStatus(d);
+                    const matchStatus = filterStatus === 'ALL' || st === filterStatus;
+                    return matchText && matchCurr && matchStatus;
+               });
+
+               return `
+                <div class="card">
+                    <div class="filters-bar">
+                        <input type="text" class="form-control" placeholder="Qidirish (ism, tel, izoh)..." value="${escapeHtml(filterSearch)}" oninput="filterSearch = this.value; renderPage();">
+                        <select class="form-control" onchange="filterCurrency = this.value; renderPage();">
+                            <option value="ALL" ${filterCurrency === 'ALL' ? 'selected' : ''}>Barcha valyutalar</option>
+                            <option value="UZS" ${filterCurrency === 'UZS' ? 'selected' : ''}>UZS (So'm)</option>
+                            <option value="USD" ${filterCurrency === 'USD' ? 'selected' : ''}>USD ($)</option>
+                            <option value="EUR" ${filterCurrency === 'EUR' ? 'selected' : ''}>EUR (€)</option>
+                            <option value="RUB" ${filterCurrency === 'RUB' ? 'selected' : ''}>RUB (₽)</option>
+                        </select>
+                        ${mode !== 'overdue' ? `
+                        <select class="form-control" onchange="filterStatus = this.value; renderPage();">
+                            <option value="ALL" ${filterStatus === 'ALL' ? 'selected' : ''}>Barcha holatlar</option>
+                            <option value="active" ${filterStatus === 'active' ? 'selected' : ''}>Faol (Jarayonda)</option>
+                            <option value="overdue" ${filterStatus === 'overdue' ? 'selected' : ''}>Muddati o'tgan</option>
+                            <option value="paid" ${filterStatus === 'paid' ? 'selected' : ''}>To'liq yopilgan</option>
+                        </select>` : ''}
+                    </div>
+                    ${filtered.length === 0
+                         ? "<p style='color: var(--text-muted); padding: 12px 0;'>Mos keluvchi ma'lumot topilmadi.</p>"
+                         : buildDebtTable(filtered)}
+                </div>
+            `;
+          }
+
+          function buildDebtTable(list) {
+               return `
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Qarzdor / Shaxs</th>
+                                <th>Turi</th>
+                                <th>Umumiy summa</th>
+                                <th>To'langan</th>
+                                <th>Qoldiq</th>
+                                <th>Muddat</th>
+                                <th>Holat</th>
+                                <th>Amallar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${list.map(d => {
+                    const rem = Math.max(0, d.amount - d.paid);
+                    const status = getDebtStatus(d);
+                    const typeBadge = d.type === 'given'
+                         ? '<span class="badge badge-given">Berilgan (Olinadi)</span>'
+                         : '<span class="badge badge-taken">Olingan (Beriladi)</span>';
+                    let statusBadge = '<span class="badge badge-given">Faol</span>';
+                    if (status === 'paid') statusBadge = '<span class="badge badge-paid">Yopilgan</span>';
+                    if (status === 'overdue') statusBadge = "<span class=\"badge badge-overdue\">Muddati o'tgan</span>";
+
+                    return `
+                                    <tr>
+                                        <td>
+                                            <a class="person-link" onclick="navigate('person_detail', '${escapeJs(d.personName)}')">${escapeHtml(d.personName)}</a>
+                                            <div style="font-size: 12px; color: var(--text-muted);">${escapeHtml(d.phone || '')}</div>
+                                        </td>
+                                        <td>${typeBadge}</td>
+                                        <td><strong>${formatMoney(d.amount, d.currency)}</strong></td>
+                                        <td style="color: var(--success);">${formatMoney(d.paid, d.currency)}</td>
+                                        <td style="color: ${rem > 0 ? 'var(--danger)' : 'var(--text-muted)'}; font-weight: 700;">${formatMoney(rem, d.currency)}</td>
+                                        <td>
+                                            <div>${d.dueDate}</div>
+                                            <small style="color: var(--text-muted);">Boshlandi: ${d.startDate}</small>
+                                        </td>
+                                        <td>${statusBadge}</td>
+                                        <td>
+                                            <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                                                ${rem > 0 ? `<button type="button" class="btn btn-sm btn-success" onclick="openPaymentModal('${d.id}')" title="To'lov qo'shish">+ To'lov</button>` : ''}
+                                                <button type="button" class="btn btn-sm btn-outline" onclick="openDebtModal('${d.id}')" title="Tahrirlash">✏️</button>
+                                                <button type="button" class="btn btn-sm btn-danger" onclick="deleteDebt('${d.id}')" title="O'chirish">🗑️</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                `;
+               }).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+          }
+
+          function renderDebtorsDirectoryHTML() {
+               const debts = getDebts();
+               const map = new Map();
+
+               debts.forEach(d => {
+                    const key = d.personName.trim().toLowerCase();
+                    if (!map.has(key)) {
+                         map.set(key, { name: d.personName.trim(), phone: d.phone, address: d.address, items: [] });
+                    }
+                    map.get(key).items.push(d);
+               });
+
+               const people = Array.from(map.values()).filter(p =>
+                    !filterSearch ||
+                    p.name.toLowerCase().includes(filterSearch.toLowerCase()) ||
+                    (p.phone && p.phone.includes(filterSearch))
+               );
+
+               return `
+                <div class="filters-bar">
+                    <input type="text" class="form-control" style="max-width: 340px;" placeholder="Qarzdor ismi yoki raqami bo'yicha qidirish..." value="${escapeHtml(filterSearch)}" oninput="filterSearch = this.value; renderPage();">
+                </div>
+                <div class="debtors-grid">
+                    ${people.length === 0 ? '<p style="color: var(--text-muted);">Hali birorta qarzdor kiritilmagan.</p>' : people.map(p => {
+                    const overdueCount = p.items.filter(i => getDebtStatus(i) === 'overdue').length;
+                    const activeCount = p.items.filter(i => getDebtStatus(i) !== 'paid').length;
+                    return `
+                            <div class="debtor-card">
+                                <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 10px;">
+                                    <div>
+                                        <h3 style="font-size: 16px;">${escapeHtml(p.name)}</h3>
+                                        <p style="font-size: 13px; color: var(--text-muted); margin-top: 2px;">📞 ${escapeHtml(p.phone || 'Kiritilmagan')}</p>
+                                    </div>
+                                    ${overdueCount > 0 ? `<span class="badge badge-overdue">${overdueCount} kechikkan</span>` : ''}
+                                </div>
+                                <p style="font-size: 12.5px; color: var(--text-muted); margin-bottom: 14px;">
+                                    📍 ${escapeHtml(p.address || "Manzil ko'rsatilmagan")}
+                                </p>
+                                <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-color); padding-top: 12px;">
+                                    <span style="font-size: 12.5px; font-weight: 600;">Jami bitim: ${p.items.length} ta (${activeCount} faol)</span>
+                                    <button type="button" class="btn btn-sm btn-primary" onclick="navigate('person_detail', '${escapeJs(p.name)}')">Profilni ochish →</button>
+                                </div>
+                            </div>
+                        `;
+               }).join('')}
+                </div>
+            `;
+          }
+
+          function renderPersonDetailHTML(personName) {
+               const debts = getDebts().filter(d => d.personName.trim().toLowerCase() === personName.trim().toLowerCase());
+               if (debts.length === 0) {
+                    return `<div class="card"><p>Ma'lumot topilmadi.</p><button type="button" class="btn btn-outline" onclick="navigate('debtors')">← Orqaga</button></div>`;
+               }
+
+               const latest = debts[debts.length - 1];
+
+               return `
+                <div style="margin-bottom: 16px; display: flex; gap: 10px; flex-wrap: wrap;">
+                    <button type="button" class="btn btn-outline btn-sm" onclick="navigate('debtors')">← Qarzdorlar ro'yxatiga qaytish</button>
+                    <button type="button" class="btn btn-primary btn-sm" onclick="openDebtModalForPerson('${escapeJs(latest.personName)}')">+ Shu shaxsga yangi qarz qo'shish</button>
+                </div>
+
+                <div class="card">
+                    <h3>Shaxsiy ma'lumotlar va rekvizitlar</h3>
+                    <div class="profile-grid">
+                        <div class="info-item"><small>To'liq ismi (F.I.SH)</small><strong>${escapeHtml(latest.personName)}</strong></div>
+                        <div class="info-item"><small>Asosiy telefon</small><strong>${escapeHtml(latest.phone || '-')}</strong></div>
+                        <div class="info-item"><small>Qo'shimcha aloqa / Telegram</small><strong>${escapeHtml(latest.altContact || '-')}</strong></div>
+                        <div class="info-item"><small>Pasport / JSHSHIR</small><strong>${escapeHtml(latest.passport || '-')}</strong></div>
+                        <div class="info-item"><small>Manzil</small><strong>${escapeHtml(latest.address || '-')}</strong></div>
+                        <div class="info-item"><small>Kafil shaxs</small><strong>${escapeHtml(latest.guarantor || '-')}</strong></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3 style="margin-bottom: 14px;">Barcha qarz bitimlari (${debts.length} ta)</h3>
+                    ${buildDebtTable(debts)}
+                </div>
+
+                <div class="card">
+                    <h3 style="margin-bottom: 14px;">To'lovlar (Bo'lib to'lash) tarixi</h3>
+                    ${renderPersonPaymentsHistory(debts)}
+                </div>
+            `;
+          }
+
+          function renderPersonPaymentsHistory(debts) {
+               const allPayments = [];
+               debts.forEach(d => {
+                    (d.payments || []).forEach(p => {
+                         allPayments.push({
+                              ...p,
+                              currency: d.currency,
+                              debtType: d.type === 'given' ? 'Berilgan qarzdan' : 'Olingan qarzdan'
+                         });
+                    });
+               });
+
+               if (allPayments.length === 0) {
+                    return "<p style='color: var(--text-muted); font-size: 13.5px;'>Hali qisman yoki to'liq to'lovlar qayd etilmagan.</p>";
+               }
+
+               return `
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Sana</th>
+                                <th>Yo'nalish</th>
+                                <th>To'langan summa</th>
+                                <th>Izoh</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${allPayments.map(p => `
+                                <tr>
+                                    <td>${p.date}</td>
+                                    <td>${p.debtType}</td>
+                                    <td style="color: var(--success); font-weight: 700;">+${formatMoney(p.amount, p.currency)}</td>
+                                    <td>${escapeHtml(p.note || '-')}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+          }
+
+          function openDebtModal(debtId = null) {
+               const form = document.getElementById('debtForm');
+               form.reset();
+               document.getElementById('debtId').value = '';
+               populatePeopleDatalist();
+               document.getElementById('debtStartDate').value = getTodayStr(0);
+
+               if (debtId) {
+                    const d = getDebts().find(item => item.id === debtId);
+                    if (!d) return;
+                    document.getElementById('debtModalTitle').textContent = "Qarz ma'lumotlarini tahrirlash";
+                    document.getElementById('debtId').value = d.id;
+                    document.getElementById('debtType').value = d.type;
+                    document.getElementById('personName').value = d.personName;
+                    document.getElementById('personPhone').value = d.phone || '';
+                    document.getElementById('personAltContact').value = d.altContact || '';
+                    document.getElementById('personPassport').value = d.passport || '';
+                    document.getElementById('personAddress').value = d.address || '';
+                    document.getElementById('personGuarantor').value = d.guarantor || '';
+                    document.getElementById('debtCurrency').value = d.currency;
+                    document.getElementById('debtAmount').value = d.amount;
+                    document.getElementById('debtPaid').value = d.paid;
+                    document.getElementById('debtStartDate').value = d.startDate;
+                    document.getElementById('debtDueDate').value = d.dueDate;
+                    document.getElementById('debtNote').value = d.note || '';
+               } else {
+                    document.getElementById('debtModalTitle').textContent = "Yangi qarz yozish";
+                    if (currentPage === 'taken') document.getElementById('debtType').value = 'taken';
+               }
+
+               document.getElementById('debtModal').classList.add('open');
+          }
+
+          function openDebtModalForPerson(name) {
+               openDebtModal();
+               document.getElementById('personName').value = name;
+               autofillPersonDetails();
+          }
+
+          function populatePeopleDatalist() {
+               const dl = document.getElementById('existingPeople');
+               const names = [...new Set(getDebts().map(d => d.personName))];
+               dl.innerHTML = names.map(n => `<option value="${escapeHtml(n)}">`).join('');
+          }
+
+          function autofillPersonDetails() {
+               const name = document.getElementById('personName').value.trim().toLowerCase();
+               const match = getDebts().slice().reverse().find(d => d.personName.trim().toLowerCase() === name);
+               if (match) {
+                    document.getElementById('personPhone').value = match.phone || '';
+                    document.getElementById('personAltContact').value = match.altContact || '';
+                    document.getElementById('personPassport').value = match.passport || '';
+                    document.getElementById('personAddress').value = match.address || '';
+                    document.getElementById('personGuarantor').value = match.guarantor || '';
+               }
+          }
+
+          function saveDebt(e) {
+               e.preventDefault();
+               const debts = getDebts().slice();
+               const id = document.getElementById('debtId').value;
+               const amount = parseFloat(document.getElementById('debtAmount').value);
+               const paid = parseFloat(document.getElementById('debtPaid').value || 0);
+
+               if (paid > amount) {
+                    alert("To'langan summa umumiy qarz summasidan katta bo'lishi mumkin emas!");
+                    return;
+               }
+
+               const payload = {
+                    id: id || 'debt_' + Date.now(),
+                    type: document.getElementById('debtType').value,
+                    personName: document.getElementById('personName').value.trim(),
+                    phone: document.getElementById('personPhone').value.trim(),
+                    altContact: document.getElementById('personAltContact').value.trim(),
+                    passport: document.getElementById('personPassport').value.trim(),
+                    address: document.getElementById('personAddress').value.trim(),
+                    guarantor: document.getElementById('personGuarantor').value.trim(),
+                    currency: document.getElementById('debtCurrency').value,
+                    amount,
+                    paid,
+                    startDate: document.getElementById('debtStartDate').value,
+                    dueDate: document.getElementById('debtDueDate').value,
+                    note: document.getElementById('debtNote').value.trim(),
+                    payments: []
+               };
+
+               if (id) {
+                    const idx = debts.findIndex(d => d.id === id);
+                    if (idx !== -1) {
+                         payload.payments = debts[idx].payments || [];
+                         debts[idx] = payload;
+                    }
+               } else {
+                    if (paid > 0) {
+                         payload.payments.push({ date: payload.startDate, amount: paid, note: "Boshlang'ich to'lov" });
+                    }
+                    debts.unshift(payload);
+               }
+
+               saveDebts(debts);
+               closeModal('debtModal');
+               renderPage();
+               showToast("Qarz ma'lumotlari saqlandi!");
+          }
+
+          function deleteDebt(id) {
+               if (!confirm("Haqiqatan ham ushbu qarz yozuvini o'chirmoqchimisiz?")) return;
+               const debts = getDebts().filter(d => d.id !== id);
+               saveDebts(debts);
+               renderPage();
+               showToast("Yozuv o'chirildi");
+          }
+
+          function openPaymentModal(id) {
+               const d = getDebts().find(item => item.id === id);
+               if (!d) return;
+               const rem = d.amount - d.paid;
+               document.getElementById('payDebtId').value = d.id;
+               document.getElementById('payAmount').max = rem;
+               document.getElementById('payAmount').value = rem;
+               document.getElementById('payDate').value = getTodayStr(0);
+               document.getElementById('payNote').value = '';
+               document.getElementById('payDebtSummary').innerHTML = `
+                <strong>${escapeHtml(d.personName)}</strong><br>
+                Qolgan qarz: <strong style="color: var(--danger);">${formatMoney(rem, d.currency)}</strong>
+            `;
+               document.getElementById('paymentModal').classList.add('open');
+          }
+
+          function submitPayment(e) {
+               e.preventDefault();
+               const id = document.getElementById('payDebtId').value;
+               const payAmt = parseFloat(document.getElementById('payAmount').value);
+               const payDate = document.getElementById('payDate').value;
+               const payNote = document.getElementById('payNote').value.trim();
+
+               const debts = getDebts().slice();
+               const d = debts.find(item => item.id === id);
+               if (!d) return;
+
+               const rem = d.amount - d.paid;
+               if (payAmt <= 0 || payAmt > rem + 0.0001) {
+                    alert("To'lov summasi qoldiqdan oshmasligi kerak!");
+                    return;
+               }
+
+               d.paid = Number((d.paid + payAmt).toFixed(2));
+               d.payments = d.payments || [];
+               d.payments.push({ date: payDate, amount: payAmt, note: payNote || "Qisman to'lov" });
+
+               saveDebts(debts);
+               closeModal('paymentModal');
+               renderPage();
+               showToast("To'lov muvaffaqiyatli qo'shildi!");
+          }
+
+          function closeModal(modalId) {
+               document.getElementById(modalId).classList.remove('open');
+          }
+
+          function exportJSON() {
+               const data = JSON.stringify(getDebts(), null, 2);
+               const blob = new Blob([data], { type: 'application/json' });
+               const url = URL.createObjectURL(blob);
+               const a = document.createElement('a');
+               a.href = url;
+               a.download = `qarz-daftarim-${currentUser.username}-${getTodayStr(0)}.json`;
+               a.click();
+               URL.revokeObjectURL(url);
+          }
+
+          function importJSON(e) {
+               const file = e.target.files[0];
+               if (!file) return;
+               const reader = new FileReader();
+               reader.onload = (ev) => {
+                    try {
+                         const parsed = JSON.parse(ev.target.result);
+                         if (!Array.isArray(parsed)) throw new Error("Noto'g'ri format");
+                         saveDebts(parsed);
+                         renderPage();
+                         showToast("Ma'lumotlar muvaffaqiyatli tiklandi!");
+                    } catch (err) {
+                         alert("Fayl formati noto'g'ri!");
+                    }
+               };
+               reader.readAsText(file);
+          }
+
+          function escapeHtml(str) {
+               return String(str || '').replace(/[&<>"']/g, m => ({
+                    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+               }[m]));
+          }
+
+          function escapeJs(str) {
+               return String(str || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+          }
+     </script>
+</body>
+
+</html>
